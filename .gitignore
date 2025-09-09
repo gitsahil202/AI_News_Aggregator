@@ -1,0 +1,6 @@
+.venv/
+.env
+.env/
+*.sqlite3
+media/
+staticfiles/
