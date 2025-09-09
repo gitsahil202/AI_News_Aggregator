@@ -147,4 +147,4 @@ class SummaryView(APIView):
         text_articles=add_text(articles)
         combined_text=combine_text(text_articles)
         final=NewsSummary(combined_text)
-        return Response({"summary":final},status=200)
+        return Response({"summary":final,"articles":articles},status=200)

@@ -9,7 +9,7 @@ st.set_page_config(page_title="News Summarizer", layout="wide")
 st.title("📰 AI-Powered News Summarizer")
 
 # Input box
-topic = st.text_input("Enter a news topic:", placeholder="e.g., Earthquake in Japan, AI in healthcare...")
+topic = st.text_input("Enter a news topic:", placeholder="e.g., India-America relations, AI in healthcare...")
 
 if st.button("Get Summary"):
     if not topic.strip():
@@ -29,11 +29,25 @@ if st.button("Get Summary"):
                     articles = data.get("articles", [])[:5]
                     if articles:
                         st.subheader("🔗 Top Articles")
+
                         for idx, article in enumerate(articles, start=1):
-                            st.markdown(
-                                f"**{idx}. [{article['title']}]({article['url']})**  \n"
-                                f"{article.get('description','No description available.')}"
-                            )
+                            with st.container():
+                                st.markdown("---")  # divider between cards
+                                col1, col2 = st.columns([4, 1])  # wider left, narrow right
+
+                                with col1:
+                                    st.markdown(
+                                        f"### {idx}. [{article['title']}]({article['url']})"
+                                    )
+                                    st.markdown(
+                                        # f"**Source:** {article.get('source','Unknown')}  \n"
+                                        f"**Description:** {article.get('description','No description available.')}"
+                                    )
+
+                                with col2:
+                                    # optional: show an image if you include 'urlToImage' in articles
+                                    if article.get("urlToImage"):
+                                        st.image(article["urlToImage"], use_column_width=True)
                     else:
                         st.info("No articles found.")
                 else:
